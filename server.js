@@ -1,5 +1,7 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
+const uid = require('uniqid')
 
 const dataBase = require('./db/db.json');
 const PORT = 3001;
@@ -14,20 +16,40 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'))
 });
 
-app.get('api/notes', (req, res) => {
+app.get('/api/notes', (req, res) => {
     console.info(`GET /api/notes`);
     res.status(200).json(dataBase)
 });
 
 
-app.post('api/notes', (req, res) => {
+app.post('/api/notes', (req, res) => {
     console.info(`${req.methode} request received to add a note`);
     const {title, text} = req.body
     if (title && text) {
         const newNote = {
             title,
             text,
+            note_id: uid()
         };
+
+        fs.readFile('./db/db.json', 'utf8', (err, data) => {
+            if (err){
+                console.error(err);
+            } else {
+                const parseNotes = JSON.parse(data);
+                parseNotes.push(newNote);
+
+                fs.writeFile(
+                    './db/db.json',
+                    JSON.stringify(parseNotes, null),
+                    (writeErr) =>
+                    writeErr
+                    ? console.error(writeErr)
+                    : console.info ('Successfully updated notes!')
+                    );
+            }
+        })
+
         const response = {
             status: 'success',
             body: newNote
