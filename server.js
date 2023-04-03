@@ -21,7 +21,6 @@ app.get('/api/notes', (req, res) => {
     res.status(200).json(dataBase)
 });
 
-
 app.post('/api/notes', (req, res) => {
     console.info(`${req.methode} request received to add a note`);
     const {title, text} = req.body
@@ -29,7 +28,7 @@ app.post('/api/notes', (req, res) => {
         const newNote = {
             title,
             text,
-            note_id: uid()
+            id: uid()
         };
 
         fs.readFile('./db/db.json', 'utf8', (err, data) => {
