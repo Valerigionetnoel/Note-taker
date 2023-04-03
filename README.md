@@ -10,7 +10,7 @@ You will need to run npm install to run this application.
 
 ## Usage
 
-![My awesome backend application](/Develop/Note-taker/public/assets/image/notetakeimage.PNG)
+![My awesome backend application](./public/assets/image/notetakeimage.PNG)
 
 To use this app, simply write a title and some desciptive text. Click on the save icon on the top right to save it to the left side. You can click on the left title to show you your note.
 
