@@ -18,7 +18,10 @@ app.get('/notes', (req, res) => {
 
 app.get('/api/notes', (req, res) => {
     console.info(`GET /api/notes`);
-    res.status(200).json(dataBase)
+    // res.status(200).json(dataBase)
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+        err ? console.log(err) : res.json(JSON.parse(data))  
+      })
 });
 
 app.post('/api/notes', (req, res) => {
